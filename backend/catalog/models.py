@@ -35,3 +35,14 @@ class ProductImage(models.Model):
 class Inventory(models.Model):
     product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name="inventory")
     quantity = models.IntegerField(default=0)
+
+class ProductReview(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="reviews")
+    name = models.CharField(max_length=80)
+    rating = models.PositiveSmallIntegerField()  # 1..5
+    comment = models.TextField(blank=True)
+    is_approved = models.BooleanField(default=True)  # deixe True se não precisa de moderação
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [models.Index(fields=["product", "is_approved", "-created_at"])]

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, ProductImage, Inventory
+from .models import Category, Product, ProductImage, Inventory, ProductReview
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -22,3 +22,9 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Inventory)
 class InventoryAdmin(admin.ModelAdmin):
     list_display = ["product", "quantity"]
+
+@admin.register(ProductReview)
+class ProductReviewAdmin(admin.ModelAdmin):
+    list_display = ["product", "name", "rating", "is_approved", "created_at"]
+    list_filter = ["is_approved", "rating", "product"]
+    search_fields = ["name", "comment", "product__name"]

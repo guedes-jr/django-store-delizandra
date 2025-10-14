@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { toast } from "sonner";
 
 export interface CartItem {
@@ -23,7 +23,18 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const STORAGE_KEY = "shop_cart_v1";
+
+  const [items, setItems] = useState<CartItem[]>(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch { return []; }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  }, [items]);
 
   const addItem = (item: Omit<CartItem, "quantity">) => {
     setItems((prev) => {

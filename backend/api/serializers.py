@@ -1,6 +1,6 @@
 from typing import Any
 from rest_framework import serializers
-from catalog.models import Category, Product, ProductImage
+from catalog.models import Category, Product, ProductImage, ProductReview
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -50,3 +50,13 @@ class BuyNowOut(serializers.Serializer):
 
 def serialize_cart_snapshot(payload: dict[str, Any]) -> dict[str, Any]:
     return payload
+
+class ProductReviewOut(serializers.ModelSerializer):
+    class Meta:
+        model = ProductReview
+        fields = ["id", "name", "rating", "comment", "created_at"]
+
+class ProductReviewIn(serializers.Serializer):
+    name = serializers.CharField(max_length=80)
+    rating = serializers.IntegerField(min_value=1, max_value=5)
+    comment = serializers.CharField(allow_blank=True, required=False)

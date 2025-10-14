@@ -2,6 +2,8 @@ import { X, Minus, Plus, ShoppingBag } from "lucide-react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
 import { useCart } from "@/contexts/CartContext";
+import { checkout } from "@/services/api";
+import { useState } from "react";
 
 interface CartProps {
   isOpen: boolean;
@@ -10,6 +12,9 @@ interface CartProps {
 
 export const Cart = ({ isOpen, onClose }: CartProps) => {
   const { items, removeItem, updateQuantity, total, itemCount } = useCart();
+  const [sending, setSending] = useState(false);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -102,12 +107,45 @@ export const Cart = ({ isOpen, onClose }: CartProps) => {
             </div>
 
             <div className="border-t pt-4 space-y-4">
-              <div className="flex justify-between text-lg font-semibold">
-                <span>Total</span>
-                <span>R$ {total.toFixed(2)}</span>
+              <div className="flex flex-col gap-2">
+                <div className="flex justify-between text-lg font-semibold">
+                  <span>Total</span>
+                  <span>R$ {total.toFixed(2)}</span>
+                </div>
+                {/* Campos opcionais para enviar ao WhatsApp */}
+                <input
+                  className="border rounded px-3 py-2"
+                  placeholder="Seu nome (opcional)"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <input
+                  className="border rounded px-3 py-2"
+                  placeholder="Telefone (opcional)"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
               </div>
-              <Button className="w-full" size="lg">
-                Finalizar Compra
+
+              <Button
+                className="w-full"
+                size="lg"
+                disabled={sending || items.length === 0}
+                onClick={async () => {
+                  try {
+                    setSending(true);
+                    const payload = items.map(i => ({ product_id: Number(i.id), qty: i.quantity }));
+                    const res = await checkout(payload, name, phone);
+                    window.location.href = res.whatsapp_link;
+                  } catch (err) {
+                    console.error(err);
+                    alert("Não foi possível finalizar. Tente novamente.");
+                  } finally {
+                    setSending(false);
+                  }
+                }}
+              >
+                {sending ? "Gerando link..." : "Finalizar Compra"}
               </Button>
             </div>
           </div>
