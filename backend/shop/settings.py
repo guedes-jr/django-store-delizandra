@@ -15,7 +15,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "corsheaders",
-    "catalog",
+    "catalog.apps.CatalogConfig",
     "orders",
     "api",
 ]
@@ -59,3 +59,15 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.AnonRateThrottle", "rest_framework.throttling.UserRateThrottle"],
     "DEFAULT_THROTTLE_RATES": {"anon": "300/min", "user": "600/min"},
 }
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5500",
+    # adicione o domínio da sua página Lovable quando publicar
+]
+
+DEFAULT_PRODUCT_IMAGE = "https://via.placeholder.com/600"
+MAX_QTY_PER_ITEM = 10

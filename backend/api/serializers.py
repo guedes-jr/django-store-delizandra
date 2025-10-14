@@ -24,6 +24,13 @@ class CheckoutItemIn(serializers.Serializer):
     product_id = serializers.IntegerField()
     qty = serializers.IntegerField(min_value=1)
 
+    def validate_qty(self, value: int) -> int:
+        from django.conf import settings
+        max_qty = getattr(settings, "MAX_QTY_PER_ITEM", 10)
+        if value > max_qty:
+            raise serializers.ValidationError(f"Quantidade máxima por item é {max_qty}.")
+        return value
+
 class CheckoutIn(serializers.Serializer):
     items = CheckoutItemIn(many=True)
     customer_name = serializers.CharField(allow_blank=True, required=False)

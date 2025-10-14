@@ -1,0 +1,45 @@
+[
+  {"model":"catalog.category","pk":1,"fields":{"name":"Bebidas","slug":"bebidas","is_active":true,"position":1}},
+  {"model":"catalog.category","pk":2,"fields":{"name":"Snacks","slug":"snacks","is_active":true,"position":2}},
+
+  {"model":"catalog.product","pk":1,"fields":{
+    "category":1,
+    "name":"Refrigerante Lata",
+    "slug":"refrigerante-lata",
+    "description":"350ml",
+    "sku":"REF-LATA-350",
+    "price":"7.90",
+    "promo_price":null,
+    "is_active":true,
+    "featured":true,
+    "created_at":"2025-10-01T12:00:00Z"
+  }},
+  {"model":"catalog.product","pk":2,"fields":{
+    "category":2,
+    "name":"Pipoca Média",
+    "slug":"pipoca-media",
+    "description":"Salgada",
+    "sku":"PIPOCA-MED",
+    "price":"18.90",
+    "promo_price":"16.90",
+    "is_active":true,
+    "featured":true,
+    "created_at":"2025-10-01T12:00:00Z"
+  }},
+  {"model":"catalog.product","pk":3,"fields":{
+    "category":2,
+    "name":"Chocolate Barra",
+    "slug":"chocolate-barra",
+    "description":"Ao leite",
+    "sku":"CHOC-AL",
+    "price":"9.50",
+    "promo_price":null,
+    "is_active":true,
+    "featured":false,
+    "created_at":"2025-10-01T12:00:00Z"
+  }},
+
+  {"model":"catalog.productimage","pk":1,"fields":{"product":1,"url":"https://picsum.photos/seed/ref/600/600","position":0}},
+  {"model":"catalog.productimage","pk":2,"fields":{"product":2,"url":"https://picsum.photos/seed/pipoca/600/600","position":0}},
+  {"model":"catalog.productimage","pk":3,"fields":{"product":3,"url":"https://picsum.photos/seed/choc/600/600","position":0}}
+]
