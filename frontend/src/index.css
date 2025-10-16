@@ -109,3 +109,15 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* src/styles/scroll.css */
+.scroll-y{overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.25) transparent}
+.scroll-y::-webkit-scrollbar{width:8px}
+.scroll-y::-webkit-scrollbar-track{background:transparent}
+.scroll-y::-webkit-scrollbar-thumb{background-color:rgba(0,0,0,.25);border-radius:9999px;border:2px solid transparent;background-clip:content-box}
+.scroll-y:hover::-webkit-scrollbar-thumb{background-color:rgba(0,0,0,.35)}
+@media (prefers-color-scheme: dark){
+  .scroll-y{scrollbar-color:rgba(255,255,255,.25) transparent}
+  .scroll-y::-webkit-scrollbar-thumb{background-color:rgba(255,255,255,.25)}
+  .scroll-y:hover::-webkit-scrollbar-thumb{background-color:rgba(255,255,255,.35)}
+}

@@ -6,6 +6,7 @@ export interface UiProduct {
   id: number;
   name: string;
   image: string;
+  images: string[];
   price: number;
   promo_price?: number | null;
   description?: string;
@@ -21,6 +22,7 @@ export const ProductGrid = () => {
     id: p.id,
     name: p.name,
     image: p.images?.[0]?.url || "https://via.placeholder.com/600",
+    images: (p.images || []).map(i => i.url),
     price: Number(p.price),
     promo_price: p.promo_price ? Number(p.promo_price) : null,
     description: p.description ?? "",

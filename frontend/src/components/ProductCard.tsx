@@ -62,6 +62,7 @@ export function ProductCard({ product }: Props) {
           id: product.id,
           name: product.name,
           image: product.image,
+          images: product.images,                // <<<<<<<<<<
           price: product.price,
           promo_price: product.promo_price ?? null,
           description: product.description ?? "",
